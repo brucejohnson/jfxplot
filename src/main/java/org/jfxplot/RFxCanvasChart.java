@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.jfxplot;
 
 import javafx.scene.chart.Axis;
@@ -30,6 +29,7 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.paint.Color;
+import static org.jfxplot.GraphicDevice.TR.INCH;
 
 /**
  * A chart that displays rectangular bars with heights indicating data values for categories. Used for displaying
@@ -60,6 +60,14 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
         this.xyAttrData = xyAttrData;
         subtitle = new Subtitle(this, getChildren(), getLegend());
         annotations = new XYAnnotations(this, getChartChildren());
+    }
+
+    public void addAttrData(XYChart.Series series, GraphAttributes gAttr) {
+        if (xyAttrData == null) {
+            xyAttrData = new HashMap<>();
+        }
+        System.out.println(gAttr.toString());
+        xyAttrData.put(series, gAttr);
     }
 
     void addDataListener(ObservableList<XYChart.Series> data) {
@@ -100,10 +108,13 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
 
     protected void drawSeries(XYChart.Series series, ValueAxis xAxis, ValueAxis yAxis) {
         GraphAttributes gAttr = getGraphAttributes(series);
-
-        gC.setStroke(gAttr.stroke);
+        System.out.println("draw with " + gAttr);
+        gC.setStroke(gAttr.stroke[0]);
         gC.setLineWidth(gAttr.lineWidth);
+        System.out.println(gAttr.toString());
+
         if (gAttr.showLines) {
+            System.out.println("show lines");
             boolean first = true;
             //gC.setLineDashes(dashes);
             Iterator<XYChart.Data> dataIter = getDisplayedDataIterator(series);
@@ -125,16 +136,19 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
             gC.stroke();
         }
         if (gAttr.showSymbols) {
-            gC.setFill(gAttr.fill);
+            System.out.println("show sym");
             Iterator<XYChart.Data> dataIter = getDisplayedDataIterator(series);
+            int nColors = gAttr.fill.length;
+            int iSym = 0;
             while (dataIter.hasNext()) {
+                gC.setStroke(gAttr.stroke[iSym % nColors]);
                 XYChart.Data data = dataIter.next();
                 double x = (Double) data.getXValue();
                 double yR = (Double) data.getYValue();
                 x = xAxis.getDisplayPosition(x);
                 double y = yAxis.getDisplayPosition(yR);
                 double diameter = 10.0;
-                gC.fillOval(x - diameter / 2, y - diameter / 2, diameter, diameter);
+                gC.strokeOval(x - diameter / 2, y - diameter / 2, diameter, diameter);
                 Object extraValue = data.getExtraValue();
                 if (gAttr.showRange && (extraValue != null) && (extraValue instanceof Double)) {
                     double dY = (Double) extraValue;
@@ -143,9 +157,35 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
                     gC.strokeLine(x, y1, x, y2);
 
                 }
+                iSym++;
 
             }
         }
+        if (gAttr.showRange) {
+            System.out.println("show sym");
+            Iterator<XYChart.Data> dataIter = getDisplayedDataIterator(series);
+            int nColors = gAttr.fill.length;
+            int iSym = 0;
+            while (dataIter.hasNext()) {
+                gC.setFill(gAttr.fill[iSym % nColors]);
+                XYChart.Data data = dataIter.next();
+                double x = (Double) data.getXValue();
+                double yR = (Double) data.getYValue();
+                x = xAxis.getDisplayPosition(x);
+                double y = yAxis.getDisplayPosition(yR);
+                Object extraValue = data.getExtraValue();
+                if ((extraValue != null) && (extraValue instanceof Double)) {
+                    double dY = (Double) extraValue;
+                    double y1 = yAxis.getDisplayPosition(yR + dY);
+                    double y2 = yAxis.getDisplayPosition(yR - dY);
+                    gC.strokeLine(x, y1, x, y2);
+
+                }
+                iSym++;
+
+            }
+        }
+
     }
 
     @Override

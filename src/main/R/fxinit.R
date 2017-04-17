@@ -1,4 +1,3 @@
-
 fxstage <- function() {
     iStage = PlotApp$stage()+2L
     return(iStage)
@@ -42,4 +41,27 @@ fxdev.prev <- function(which) {
 
 fxdev.next <- function(which) {
   return(PlotApp$nextDevice(as.integer(which)-2L)+2L)
+}
+
+C_plotXY <- function(...) {
+    args <- list(...)
+    print("pxy")
+    print(args)
+    do.call(fxplot.xy,args)
+}
+C_plotXYE <- function(...) {
+    args <- list(...)
+    print("pxy")
+    print(args)
+    do.call(fxplot.xye,args)
+}
+
+.External.graphics <- function(cmd,...) {
+    args <- list(...)
+    do.call(cmd,args)
+}
+
+par <- function(argName) {
+    state <- GraphicsState$defaultState
+    return(state$getValue(argName))
 }

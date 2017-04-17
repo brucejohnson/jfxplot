@@ -334,11 +334,18 @@ text.formula <- function(formula, data = parent.frame(), ..., subset)
 
 plot.xy <- function(xy, type, pch = par("pch"), lty = par("lty"),
                     col = par("col"), bg = NA, cex = 1, lwd = par("lwd"),
-                    ...)
-    invisible(fxplot.xy(xy,type))
-    #invisible(.External.graphics(C_plotXY, xy, type))
-    #invisible(.External.graphics(C_plotXY, xy, type, pch, lty, col, bg, cex, lwd, ...))
+                    ...) {
+     invisible(.External.graphics(C_plotXY, xy, type, col))
+    #invisible(.External.graphics(C_plotXY, xy, type, pch, lty, col, bg, cex, lwd, ebar, ...))
+}
 
+plot.xye <- function(xy, extra, type, pch = par("pch"), lty = par("lty"),
+                    col = par("col"), bg = NA, cex = 1, lwd = par("lwd"),
+                    ...) {
+
+    invisible(.External.graphics(C_plotXYE, xy, extra, type, col))
+    #invisible(.External.graphics(C_plotXY, xy, type, pch, lty, col, bg, cex, lwd, ebar, ...))
+}
 
 plot.new <- function()
 {

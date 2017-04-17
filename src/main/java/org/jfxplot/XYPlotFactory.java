@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.jfxplot;
 
 import com.emxsys.chart.extension.LogarithmicAxis;
@@ -33,11 +32,13 @@ import org.renjin.sexp.*;
  */
 public class XYPlotFactory {
 
-    public static void addSeries(ObservableList<XYChart.Series> xyChartData, SEXP x, SEXP y) {
+    public static void addSeries(XYChart chart, SEXP x, SEXP y, SEXP extra, GraphAttributes gAttr) {
+        ObservableList<XYChart.Series> xyChartData = chart.getData();
         AttributeMap attributes = x.getAttributes();
         Vector dim = attributes.getDim();
         Vector xVector = (Vector) x;
         Vector yVector = (Vector) y;
+        Vector extraVector = (Vector) extra;
         XYChart.Series series;
 
         ObservableList<String> categories = FXCollections.observableArrayList();
@@ -56,26 +57,36 @@ public class XYPlotFactory {
                     series.getData().add(new XYChart.Data(matrix.getElementAsDouble(i, 0), matrix.getElementAsDouble(i, j + 1)));
                 }
                 xyChartData.add(series);
-
+                if (chart instanceof RFxCanvasChart) {
+                    ((RFxCanvasChart) chart).addAttrData(series, gAttr);
+                }
             }
-
         } else {
             nValues = xVector.length();
             series = new XYChart.Series("", FXCollections.observableArrayList());
             for (int i = 0; i < nValues; i++) {
-                series.getData().add(new XYChart.Data(xVector.getElementAsDouble(i), yVector.getElementAsDouble(i), 0.1));
+                if (extra == null) {
+                    series.getData().add(new XYChart.Data(xVector.getElementAsDouble(i), yVector.getElementAsDouble(i), 0.0));
+                } else {
+                    series.getData().add(new XYChart.Data(xVector.getElementAsDouble(i), yVector.getElementAsDouble(i), extraVector.getElementAsDouble(i)));
+
+                }
             }
             xyChartData.add(series);
+            if (chart instanceof RFxCanvasChart) {
+                System.out.println(series);
+                System.out.println(gAttr);
+                ((RFxCanvasChart) chart).addAttrData(series, gAttr);
+            }
         }
     }
 
-    public static void addSeriesToChart(XYChart chart, SEXP x, SEXP y) {
-        addSeries(chart.getData(), x, y);
+    public static void addSeriesToChart(XYChart chart, SEXP x, SEXP y, SEXP extra, GraphAttributes gAttr) {
+        addSeries(chart, x, y, extra, gAttr);
     }
 
     public static XYChart createXYPlot(SEXP x, SEXP y, PlotAttributes bAttr) {
         ObservableList<XYChart.Series> xyChartData = FXCollections.observableArrayList();
-        addSeries(xyChartData, x, y);
 
         double ymin = bAttr.ylim.getElementAsDouble(0);
         double ymax = bAttr.ylim.getElementAsDouble(1);
@@ -132,6 +143,7 @@ public class XYPlotFactory {
 //            chart = xyChart;
 //
 //        }
+        addSeries(chart, x, y, null, null);
 
         chart.setTitle(bAttr.main);
         chart.setLegendVisible(false);

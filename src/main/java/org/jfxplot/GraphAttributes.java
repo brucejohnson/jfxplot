@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.jfxplot;
 
 import javafx.scene.paint.Color;
@@ -26,12 +25,12 @@ import javafx.scene.paint.Paint;
  */
 public class GraphAttributes {
 
-    Paint stroke = Color.BLACK;
-    Paint fill = Color.BLACK;
+    Color[] stroke = {Color.BLACK};
+    Color[] fill = {Color.BLACK};
     double lineWidth = 1;
     boolean showLines = true;
     boolean showSymbols = true;
-    boolean showRange = true;
+    boolean showRange = false;
     Paint rangeStroke = Color.BLACK;
     double rangeWidth = 1;
 
@@ -39,12 +38,16 @@ public class GraphAttributes {
 
     }
 
-    public GraphAttributes(Paint stroke, Paint fill, double lineWidth, boolean showLines, boolean showSymbols) {
+    public GraphAttributes(Color[] stroke, Color[] fill, double lineWidth, boolean showLines, boolean showSymbols) {
         this.stroke = stroke;
         this.fill = fill;
         this.lineWidth = lineWidth;
         this.showLines = showLines;
         this.showSymbols = showSymbols;
+    }
+
+    public String toString() {
+        return String.format("%s %s %3.1f %b %b %b", stroke.toString(), fill.toString(), lineWidth, showLines, showSymbols, showRange);
     }
 
 }

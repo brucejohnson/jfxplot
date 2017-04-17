@@ -153,10 +153,42 @@ public class PlotApp extends Application {
             barPlotNow(sexp, plotAttr);
         });
     }
+    public static void addSeries(SEXP x, SEXP y, String type, Vector colorNames) {
+        addSeries(x, y, null, type, colorNames);
+    }
 
-    public static void addSeries(SEXP x, SEXP y) {
+    public static void addSeries(SEXP x, SEXP y, SEXP extra, String type, Vector colorNames) {
+        final GraphAttributes gAttr = new GraphAttributes();
+        System.out.println("type is " + type);
+        switch (type) {
+            case ("p"): {
+                gAttr.showLines = false;
+                gAttr.showSymbols = true;
+                break;
+            }
+            case ("b"): {
+                gAttr.showLines = true;
+                gAttr.showSymbols = true;
+                break;
+            }
+            case ("l"): {
+                gAttr.showLines = true;
+                gAttr.showSymbols = false;
+                break;
+            }
+        }
+        gAttr.showRange = extra != null;
+        int nColors = colorNames.length();
+        gAttr.stroke = new Color[nColors];
+        gAttr.fill = new Color[nColors];
+        for (int i=0;i<nColors;i++) {
+            gAttr.stroke[i] = Color.web(colorNames.getElementAsString(i));
+            gAttr.fill[i] = gAttr.stroke[i];
+        }
+        System.out.println(gAttr.toString());
+
         Platform.runLater(() -> {
-            XYPlotFactory.addSeriesToChart(currentChart, x, y);
+            XYPlotFactory.addSeriesToChart(currentChart, x, y, extra, gAttr);
         });
     }
 
