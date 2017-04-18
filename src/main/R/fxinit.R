@@ -45,14 +45,10 @@ fxdev.next <- function(which) {
 
 C_plotXY <- function(...) {
     args <- list(...)
-    print("pxy")
-    print(args)
     do.call(fxplot.xy,args)
 }
 C_plotXYE <- function(...) {
     args <- list(...)
-    print("pxy")
-    print(args)
     do.call(fxplot.xye,args)
 }
 

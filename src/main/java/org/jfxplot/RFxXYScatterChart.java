@@ -17,8 +17,6 @@
 package org.jfxplot;
 
 import javafx.scene.chart.Axis;
-import com.emxsys.chart.extension.Subtitle;
-import com.emxsys.chart.extension.XYAnnotations;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
@@ -28,44 +26,26 @@ import javafx.scene.chart.XYChart;
  * A chart that displays rectangular bars with heights indicating data values for categories. Used for displaying
  * information when at least one axis has discontinuous or discrete data.
  */
-public class RFxXYScatterChart extends ScatterChart implements AnnotatableGraph {
+public class RFxXYScatterChart extends ScatterChart {
 
-    private final Subtitle subtitle;
-    private XYAnnotations annotations;
+    String subtitle = null;
 
     public RFxXYScatterChart(Axis xAxis, Axis yAxis) {
         super(xAxis, yAxis);
-        subtitle = new Subtitle(this, getChildren(), getLegend());
-        annotations = new XYAnnotations(this, getChartChildren());
     }
 
     public RFxXYScatterChart(Axis xAxis, Axis yAxis, ObservableList<XYChart.Series> data) {
         super(xAxis, yAxis, data);
-        subtitle = new Subtitle(this, getChildren(), getLegend());
-        annotations = new XYAnnotations(this, getChartChildren());
     }
 
     public void setSubtitle(String text) {
-        subtitle.clearSubtitles();
-        if ((text != null) && (text.length() != 0)) {
-            subtitle.addSubtitle(text);
-            System.out.println("subtitle " + text + " bbb " + subtitle.getSubtitles().toString() + " " + subtitle.getSubtitles().size());
-        }
+        this.subtitle = text;
         this.requestLayout();
     }
 
     @Override
     protected void layoutChildren() {
         super.layoutChildren();
-        // layoutSubtitle with resize the chartContent member in chartChildren
-        subtitle.layoutSubtitles();
-        if (annotations != null) {
-            annotations.layoutAnnotations();
-        }
-    }
-
-    public XYAnnotations getAnnotations() {
-        return annotations;
     }
 
     public void setSymbolColors() {

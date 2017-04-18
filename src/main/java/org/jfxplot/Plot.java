@@ -44,7 +44,6 @@ public class Plot {
     protected void plotXY(double[] xArray, double[] yArray, GraphAttributes gAttr, RGraphicsContext rGC) {
         int n = xArray.length;
         if (gAttr.showLines) {
-            System.out.println("show lines");
 //            for (i = 0; i < n; i++) {
 //                xx = x[i];
 //                yy = y[i];

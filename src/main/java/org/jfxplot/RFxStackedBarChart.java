@@ -17,7 +17,6 @@
 package org.jfxplot;
 
 import javafx.scene.chart.Axis;
-import com.emxsys.chart.extension.Subtitle;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.chart.StackedBarChart;
@@ -29,37 +28,28 @@ import javafx.scene.chart.XYChart;
  */
 public class RFxStackedBarChart extends StackedBarChart {
 
-    private final Subtitle subtitle;
+    private String subtitle = null;
 
     public RFxStackedBarChart(Axis xAxis, Axis yAxis) {
         super(xAxis, yAxis);
-        subtitle = new Subtitle(this, getChildren(), getLegend());
     }
 
     public RFxStackedBarChart(Axis xAxis, Axis yAxis, ObservableList<XYChart.Series> data) {
         super(xAxis, yAxis, data);
-        subtitle = new Subtitle(this, getChildren(), getLegend());
     }
 
     public RFxStackedBarChart(Axis xAxis, Axis yAxis, ObservableList<XYChart.Series> data, double gap) {
         super(xAxis, yAxis, data, gap);
-        subtitle = new Subtitle(this, getChildren(), getLegend());
     }
 
     public void setSubtitle(String text) {
-        subtitle.clearSubtitles();
-        if ((text != null) && (text.length() != 0)) {
-            subtitle.addSubtitle(text);
-            System.out.println("subtitle " + text + " bbb " + subtitle.getSubtitles().toString() + " " + subtitle.getSubtitles().size());
-        }
+        subtitle = text;
         this.requestLayout();
     }
 
     @Override
     protected void layoutChildren() {
         super.layoutChildren();
-        // layoutSubtitle with resize the chartContent member in chartChildren
-        subtitle.layoutSubtitles();
     }
 
     public void setBarColors() {

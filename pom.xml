@@ -39,11 +39,6 @@
             <version>0.7.0-RC7</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-        <groupId>com.emxsys</groupId>
-        <artifactId>jfxchartext</artifactId>
-        <version>1.1</version>
-        </dependency>
     </dependencies>
 
     <repositories>

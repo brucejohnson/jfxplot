@@ -17,8 +17,6 @@
 package org.jfxplot;
 
 import javafx.scene.chart.Axis;
-import com.emxsys.chart.extension.Subtitle;
-import com.emxsys.chart.extension.XYAnnotations;
 import java.util.HashMap;
 import java.util.Iterator;
 import javafx.collections.ListChangeListener;
@@ -28,71 +26,51 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.paint.Color;
-import static org.jfxplot.GraphicDevice.TR.INCH;
 
 /**
  * A chart that displays rectangular bars with heights indicating data values for categories. Used for displaying
  * information when at least one axis has discontinuous or discrete data.
  */
-public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
+public class RFxCanvasChart extends ScatterChart {
 
-    private final Subtitle subtitle;
-    private XYAnnotations annotations;
+    private String subtitle = null;
     private Canvas canvas;
     private GraphicsContext gC;
     private HashMap<XYChart.Series, GraphAttributes> xyAttrData = null;
 
     public RFxCanvasChart(Axis xAxis, Axis yAxis) {
         super(xAxis, yAxis);
-        subtitle = new Subtitle(this, getChildren(), getLegend());
-        annotations = new XYAnnotations(this, getChartChildren());
     }
 
     public RFxCanvasChart(Axis xAxis, Axis yAxis, ObservableList<XYChart.Series> data) {
         super(xAxis, yAxis, data);
-        subtitle = new Subtitle(this, getChildren(), getLegend());
-        annotations = new XYAnnotations(this, getChartChildren());
     }
 
     public RFxCanvasChart(Axis xAxis, Axis yAxis, ObservableList<XYChart.Series> data, HashMap<XYChart.Series, GraphAttributes> xyAttrData) {
         super(xAxis, yAxis, data);
         this.xyAttrData = xyAttrData;
-        subtitle = new Subtitle(this, getChildren(), getLegend());
-        annotations = new XYAnnotations(this, getChartChildren());
     }
 
     public void addAttrData(XYChart.Series series, GraphAttributes gAttr) {
         if (xyAttrData == null) {
             xyAttrData = new HashMap<>();
         }
-        System.out.println(gAttr.toString());
         xyAttrData.put(series, gAttr);
     }
 
     void addDataListener(ObservableList<XYChart.Series> data) {
         data.addListener((ListChangeListener.Change<? extends XYChart.Series> change) -> {
-            System.out.println("data changed");
         });
     }
 
     public void setSubtitle(String text) {
-        subtitle.clearSubtitles();
-        if ((text != null) && (text.length() != 0)) {
-            subtitle.addSubtitle(text);
-            System.out.println("subtitle " + text + " bbb " + subtitle.getSubtitles().toString() + " " + subtitle.getSubtitles().size());
-        }
+        subtitle = text;
         this.requestLayout();
     }
 
     @Override
     protected void layoutChildren() {
         super.layoutChildren();
-        // layoutSubtitle with resize the chartContent member in chartChildren
-        subtitle.layoutSubtitles();
-        if (annotations != null) {
-            annotations.layoutAnnotations();
-        }
     }
 
     GraphAttributes getGraphAttributes(XYChart.Series series) {
@@ -108,13 +86,10 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
 
     protected void drawSeries(XYChart.Series series, ValueAxis xAxis, ValueAxis yAxis) {
         GraphAttributes gAttr = getGraphAttributes(series);
-        System.out.println("draw with " + gAttr);
         gC.setStroke(gAttr.stroke[0]);
         gC.setLineWidth(gAttr.lineWidth);
-        System.out.println(gAttr.toString());
 
         if (gAttr.showLines) {
-            System.out.println("show lines");
             boolean first = true;
             //gC.setLineDashes(dashes);
             Iterator<XYChart.Data> dataIter = getDisplayedDataIterator(series);
@@ -136,7 +111,6 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
             gC.stroke();
         }
         if (gAttr.showSymbols) {
-            System.out.println("show sym");
             Iterator<XYChart.Data> dataIter = getDisplayedDataIterator(series);
             int nColors = gAttr.fill.length;
             int iSym = 0;
@@ -162,7 +136,6 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
             }
         }
         if (gAttr.showRange) {
-            System.out.println("show sym");
             Iterator<XYChart.Data> dataIter = getDisplayedDataIterator(series);
             int nColors = gAttr.fill.length;
             int iSym = 0;
@@ -207,11 +180,6 @@ public class RFxCanvasChart extends ScatterChart implements AnnotatableGraph {
         seriesIter.forEachRemaining((series) -> {
             drawSeries(series, xAxis, yAxis);
         });
-    }
-
-    @Override
-    public XYAnnotations getAnnotations() {
-        return annotations;
     }
 
 }

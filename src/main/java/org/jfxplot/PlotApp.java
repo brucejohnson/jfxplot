@@ -159,7 +159,6 @@ public class PlotApp extends Application {
 
     public static void addSeries(SEXP x, SEXP y, SEXP extra, String type, Vector colorNames) {
         final GraphAttributes gAttr = new GraphAttributes();
-        System.out.println("type is " + type);
         switch (type) {
             case ("p"): {
                 gAttr.showLines = false;
@@ -185,7 +184,6 @@ public class PlotApp extends Application {
             gAttr.stroke[i] = Color.web(colorNames.getElementAsString(i));
             gAttr.fill[i] = gAttr.stroke[i];
         }
-        System.out.println(gAttr.toString());
 
         Platform.runLater(() -> {
             XYPlotFactory.addSeriesToChart(currentChart, x, y, extra, gAttr);
@@ -217,19 +215,9 @@ public class PlotApp extends Application {
     }
 
     public static void drawLine() {
-        if (currentChart instanceof AnnotatableGraph) {
-            Platform.runLater(() -> {
-                ((AnnotatableGraph) currentChart).addLine(Color.BLUE, 2);
-            });
-        }
     }
 
     public static void drawText(String text, double x, double y, String pos) {
-        if (currentChart instanceof AnnotatableGraph) {
-            Platform.runLater(() -> {
-                ((AnnotatableGraph) currentChart).addText(text, x, y, pos);
-            });
-        }
     }
 
     private static void runAndWait(Runnable runnable) throws InterruptedException, ExecutionException {

@@ -16,7 +16,6 @@
  */
 package org.jfxplot;
 
-import com.emxsys.chart.extension.LogarithmicAxis;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.BarChart;
@@ -43,7 +42,6 @@ public class BarPlotFactory {
         ObservableList categories = FXCollections.observableArrayList();
         int nCategories;
         if ((dim != null) && (dim.length() > 1)) {
-            System.out.println("add matrix");
             Matrix matrix = new Matrix(vector);
             nCategories = matrix.getNumCols();
             Vector colNames = matrix.getColNames();
@@ -91,7 +89,6 @@ public class BarPlotFactory {
             series.getNode().setStyle("-fx-bar-fill: blue;");
         }
 
-
         double ymin = bAttr.ylim.getElementAsDouble(0);
         double ymax = bAttr.ylim.getElementAsDouble(1);
         double ydelta = (ymax - ymin) / 4;
@@ -99,7 +96,7 @@ public class BarPlotFactory {
         CategoryAxis xAxis = new CategoryAxis();
         ValueAxis<Number> yAxis;
         if (bAttr.yLog) {
-            yAxis = new LogarithmicAxis(bAttr.ylab, ymin, ymax, 1);
+            throw new UnsupportedOperationException("Not supported yet.");
         } else {
             yAxis = new NumberAxis(bAttr.ylab, ymin, ymax, ydelta);
         }

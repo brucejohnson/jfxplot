@@ -35,21 +35,11 @@ fxplot.chart <- function(xlim, ylim, log = "", main = NULL, sub = NULL, xlab = N
 }
 
 fxplot.xy <- function(xy, type, col = par("col"), lty = par("lty"), pch = par("pch"),bg = NA, cex = 1, lwd = par("lwd"), ...) {
-     print("infxy")
-     print(lwd)
-     print(pch)
-     print(lty)
-     print(col)
      fxinit()
      PlotApp$addSeries(xy$x,xy$y,type,col)
 }
 
 fxplot.xye <- function(xy, extra, type, col = par("col"), lty = par("lty"), pch = par("pch"),bg = NA, cex = 1, lwd = par("lwd"), ...) {
-     print("infxy")
-     print(lwd)
-     print(pch)
-     print(lty)
-     print(col)
      fxinit()
      PlotApp$addSeries(xy$x,xy$y,extra,type,col)
 }

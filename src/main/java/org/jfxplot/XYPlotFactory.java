@@ -16,7 +16,6 @@
  */
 package org.jfxplot;
 
-import com.emxsys.chart.extension.LogarithmicAxis;
 import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,7 +43,6 @@ public class XYPlotFactory {
         ObservableList<String> categories = FXCollections.observableArrayList();
         int nValues;
         if ((dim != null) && (dim.length() > 1)) {
-            System.out.println("add matrix");
             Matrix matrix = new Matrix(xVector);
             nValues = matrix.getNumRows();
             int nCategories = matrix.getNumCols() - 1;
@@ -74,8 +72,6 @@ public class XYPlotFactory {
             }
             xyChartData.add(series);
             if (chart instanceof RFxCanvasChart) {
-                System.out.println(series);
-                System.out.println(gAttr);
                 ((RFxCanvasChart) chart).addAttrData(series, gAttr);
             }
         }
@@ -98,12 +94,12 @@ public class XYPlotFactory {
         ValueAxis<Number> xAxis;
         ValueAxis<Number> yAxis;
         if (bAttr.xLog) {
-            xAxis = new LogarithmicAxis(bAttr.xlab, xmin, xmax, 1);
+            throw new UnsupportedOperationException("Not supported yet.");
         } else {
             xAxis = new NumberAxis(bAttr.xlab, xmin, xmax, xdelta);
         }
         if (bAttr.yLog) {
-            yAxis = new LogarithmicAxis(bAttr.ylab, ymin, ymax, 1);
+            throw new UnsupportedOperationException("Not supported yet.");
         } else {
             yAxis = new NumberAxis(bAttr.ylab, ymin, ymax, ydelta);
         }
@@ -162,12 +158,12 @@ public class XYPlotFactory {
         ValueAxis<Number> xAxis;
         ValueAxis<Number> yAxis;
         if (bAttr.xLog) {
-            xAxis = new LogarithmicAxis(bAttr.xlab, xmin, xmax, 1);
+            throw new UnsupportedOperationException("Not supported yet.");
         } else {
             xAxis = new NumberAxis(bAttr.xlab, xmin, xmax, xdelta);
         }
         if (bAttr.yLog) {
-            yAxis = new LogarithmicAxis(bAttr.ylab, ymin, ymax, 1);
+            throw new UnsupportedOperationException("Not supported yet.");
         } else {
             yAxis = new NumberAxis(bAttr.ylab, ymin, ymax, ydelta);
         }
