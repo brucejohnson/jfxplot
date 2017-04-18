@@ -3,6 +3,10 @@ JFXPlot is a plotting library that can be used with Renjin, the JVM-based interp
 
 This code is mostly an experiment in learning about R graphics, Renjin, and testing the possibility of adding graphics to Renjin.
 
+The plot and barplot commands currently work by using the JavaFX chart library.
+
+A prototype of a Graphics Device that uses the JavaFX Canvas is included.
+
 # Example
 
 Add the jar file, plot-0.1-SNAPSHOT.jar, to the renjin dependencies directory.
