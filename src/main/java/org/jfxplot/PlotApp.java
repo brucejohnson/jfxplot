@@ -22,6 +22,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
@@ -131,7 +133,35 @@ public class PlotApp extends Application {
 
     }
 
-    private static void showChart(XYChart chart) {
+    public static void clear() {
+        if (!launched) {
+            stage();
+        }
+        Platform.runLater(() -> {
+            BorderPane borderPane = new BorderPane();
+            myStage.setScene(new Scene(borderPane));
+            myStage.show();
+        });
+    }
+
+    public static void showCanvasNow() {
+        BorderPane borderPane = new BorderPane();
+        Canvas canvas = new Canvas(500, 500);
+        borderPane.setCenter(canvas);
+        myStage.setScene(new Scene(borderPane));
+        myStage.show();
+        GraphicsContext gC = canvas.getGraphicsContext2D();
+        CanvasExample cExample = new CanvasExample();
+        cExample.show(canvas, gC);
+    }
+
+    public static void showCanvas() {
+        Platform.runLater(() -> {
+            showCanvasNow();
+        });
+    }
+
+    public static void showChart(XYChart chart) {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(chart);
         currentChart = chart;
@@ -153,6 +183,7 @@ public class PlotApp extends Application {
             barPlotNow(sexp, plotAttr);
         });
     }
+
     public static void addSeries(SEXP x, SEXP y, String type, Vector colorNames) {
         addSeries(x, y, null, type, colorNames);
     }
@@ -180,7 +211,7 @@ public class PlotApp extends Application {
         int nColors = colorNames.length();
         gAttr.stroke = new Color[nColors];
         gAttr.fill = new Color[nColors];
-        for (int i=0;i<nColors;i++) {
+        for (int i = 0; i < nColors; i++) {
             gAttr.stroke[i] = Color.web(colorNames.getElementAsString(i));
             gAttr.fill[i] = gAttr.stroke[i];
         }
