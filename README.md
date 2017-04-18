@@ -31,8 +31,8 @@ Create new JavaFX Stage and plot barplot
     dev.new()
     barplot(m)
 
-Create new JavaFX stage and show example of canvas
-Canvas has an example of an R graphics device built-on the JavaFX Canvas
+Create new JavaFX stage and show example of canvas.
+Canvas is an example of an R graphics device built-on the JavaFX Canvas
 
     dev.new()
     canvas()
