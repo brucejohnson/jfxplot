@@ -61,3 +61,8 @@ par <- function(argName) {
     state <- GraphicsState$defaultState
     return(state$getValue(argName))
 }
+
+canvas <- function(...) {
+     PlotApp$clear()
+     PlotApp$showCanvas()
+}

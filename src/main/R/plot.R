@@ -349,7 +349,7 @@ plot.xye <- function(xy, extra, type, pch = par("pch"), lty = par("lty"),
 
 plot.new <- function()
 {
-    dev.new()
+    PlotApp$clear()
     invisible()
 }
 

@@ -25,7 +25,7 @@ function(height, names.arg = NULL,
 	 axisnames = TRUE, add = FALSE,
          plot = TRUE, ...)
  {
-    fxinit()
+    PlotApp$clear()
 
     if (plot && axisnames && is.null(names.arg))
 	names.arg <-
