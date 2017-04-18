@@ -5,6 +5,8 @@ This code is mostly an experiment in learning about R graphics, Renjin, and test
 
 # Example
 
+Add the jar file, plot-0.1-SNAPSHOT.jar, to the renjin dependencies directory.
+
 Load in library and create some test data
 
     import(org.jfxplot.PlotApp)
