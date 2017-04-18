@@ -55,6 +55,6 @@ public class GraphTrans {
         DEV.to(INCH.from(10.0));
         TR to = DEV;
         TR from = INCH;
-        
+
     }
 }
