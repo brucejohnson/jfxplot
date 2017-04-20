@@ -6,13 +6,13 @@
 
     <groupId>org.jfxplot</groupId>
     <artifactId>plot</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
     <!-- general information about your package -->
     <name>Plot</name>
     <description>Plotting for renjin</description>
-    <url>http://www.url.to/your/package/website</url>
+    <url>https://github.com/brucejohnson/jfxplot</url>
     <licenses>
         <!-- add one or more licenses under which the package is released -->
         <license>
