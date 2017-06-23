@@ -25,7 +25,8 @@ function(height, names.arg = NULL,
 	 axisnames = TRUE, add = FALSE,
          plot = TRUE, ...)
  {
-    PlotApp$clear()
+    plotManager <- PlotApp$getManager()
+    StageManager$clear()
 
     if (plot && axisnames && is.null(names.arg))
 	names.arg <-
@@ -82,6 +83,7 @@ function(height, names.arg = NULL,
         if (is.null(sub)) sub=""
         if (is.null(xlab)) xlab=""
         if (is.null(ylab)) ylab=""
-        PlotApp$barPlot(height, beside, main, sub, xlab, ylab, ylim, log, axisnames,names.arg,drawLegend,legendNames)
+        PlotManager$barPlot(height, beside, main, sub, xlab, ylab, ylim, log, axisnames,names.arg,drawLegend,legendNames)
     }
+    invisible()
 }

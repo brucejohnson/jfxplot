@@ -1,25 +1,25 @@
 fxstage <- function() {
-    iStage = PlotApp$stage()+2L
+    iStage = StageManager$stage()+2L
     return(iStage)
 }
 fxinit <- function() {
     PlotApp$initApp()
 }
 fxline <- function() {
-    PlotApp$drawLine()
+    StageManager$drawLine()
 }
 
 fxseries <- function(x, y) {
-    PlotApp$addSeries(x, y)
+    StageManager$addSeries(x, y)
 }
 
 fxtext <- function(text="",x=0,y=0,pos="CENTER") {
-    PlotApp$drawText(text, x, y, pos)
+    StageManager$drawText(text, x, y, pos)
 }
 
 
 q <- function() {
-    PlotApp$exitApp()
+    StageManager$exitApp()
     quit()
 }
 
@@ -28,19 +28,19 @@ fxdev.new <- function() {
 }
 
 fxdev.cur <- function() {
-  return(PlotApp$curDevice()+2L)
+  return(StageManager$curDevice()+2L)
 }
 
 fxdev.set <- function(which) {
-  return(PlotApp$setDevice(as.integer(which)-2L)+2L)
+  return(StageManager$setDevice(as.integer(which)-2L)+2L)
 }
 
 fxdev.prev <- function(which) {
-  return(PlotApp$prevDevice(as.integer(which)-2L)+2L)
+  return(StageManager$prevDevice(as.integer(which)-2L)+2L)
 }
 
 fxdev.next <- function(which) {
-  return(PlotApp$nextDevice(as.integer(which)-2L)+2L)
+  return(StageManager$nextDevice(as.integer(which)-2L)+2L)
 }
 
 C_plotXY <- function(...) {
@@ -63,6 +63,6 @@ par <- function(argName) {
 }
 
 canvas <- function(...) {
-     PlotApp$clear()
-     PlotApp$showCanvas()
+     StageManager$clear()
+     StageManager$showCanvas()
 }

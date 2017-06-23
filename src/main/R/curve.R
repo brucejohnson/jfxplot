@@ -20,18 +20,12 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
                   type = "l", xname = "x", xlab = xname,
                   ylab = NULL, log = NULL, xlim = NULL, ...)
 {
-    print("incurve")
-    print(expr)
     sexpr <- substitute(expr)
-    print(sexpr)
     if (is.name(sexpr)) {
-        print("isname")
         ## beter than parse() !
         xname2 <-  as.name(xname)
-        print(xname2)
         #expr <- call(as.character(sexpr), as.name(xname))
         expr <- call(as.character(sexpr), xname2)
-        print(expr)
     } else {
 	if ( !( (is.call(sexpr) || is.expression(sexpr)) &&
               xname %in% all.vars(sexpr) ))
@@ -63,8 +57,6 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
         x <- exp(seq.int(log(from), log(to), length.out = n))
     } else x <- seq.int(from, to, length.out = n)
     ll <- list(x = x); names(ll) <- xname
-    print(expr)
-    print(ll)
     y <- eval(expr, envir = ll, enclos = parent.frame())
     if (length(y) != length(x))
         stop("'expr' did not evaluate to an object of length 'n'")

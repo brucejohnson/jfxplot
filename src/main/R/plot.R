@@ -349,7 +349,8 @@ plot.xye <- function(xy, extra, type, pch = par("pch"), lty = par("lty"),
 
 plot.new <- function()
 {
-    PlotApp$clear()
+    plotManager <- PlotApp$getManager()
+    StageManager$clear()
     invisible()
 }
 
